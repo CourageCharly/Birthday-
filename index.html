@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Card with Love Letter for Uche</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .card {
+            position: relative;
+            width: 600px;
+            max-width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .red-bar {
+            position: absolute;
+            height: 60px;
+            background-color: #e41e26;
+            width: 100%;
+            top: 150px;
+            z-index: 1;
+        }
+        
+        .content {
+            position: relative;
+            padding: 30px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .balloon-container {
+            width: 100%;
+            height: 300px;
+            background-color: #5bc0de;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 80px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .balloon:before {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            bottom: -15px;
+            left: 38px;
+        }
+        
+        .balloon:nth-child(1) {
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+        
+        .balloon:nth-child(2) {
+            left: 30%;
+            top: 50%;
+            animation-delay: 1s;
+        }
+        
+        .balloon:nth-child(3) {
+            left: 50%;
+            top: 10%;
+            animation-delay: 2s;
+        }
+        
+        .balloon:nth-child(4) {
+            left: 70%;
+            top: 40%;
+            animation-delay: 3s;
+        }
+        
+        .balloon:nth-child(5) {
+            left: 85%;
+            top: 30%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        .text-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #e41e26;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .wave {
+            display: inline-block;
+            animation: wave 1.5s infinite;
+            transform-origin: 70% 70%;
+            margin-right: 5px;
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: #e41e26;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background: #c81a21;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(228, 30, 38, 0.3);
+        }
+        
+        .love-letter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .letter-content {
+            width: 90%;
+            max-width: 550px;
+            background: #fff9f0;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(50px);
+            transition: all 0.5s ease;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 20px 0;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 5;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .letter-title {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: #333;
+            margin: 20px 0 20px;
+            text-align: center;
+        }
+        
+        .date {
+            text-align: right;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .letter-body {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 0 10px;
+        }
+        
+        .letter-body p {
+            margin-bottom: 25px;
+            color: #333;
+        }
+        
+        .signature {
+            font-style: italic;
+            text-align: right;
+            margin-top: 40px;
+            padding-right: 10px;
+        }
+        
+        .signature p {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .love-letter.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .love-letter.show .letter-content {
+            transform: translateY(0);
+        }
+        
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e41e26;
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: fall 5s linear forwards;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e41e26;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        @keyframes fall {
+            0% {
+                top: -5%;
+                opacity: 1;
+                transform: rotate(45deg) translateX(0);
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+                transform: rotate(45deg) translateX(100px);
+            }
+        }
+        
+        /* Added style for the Bible quote */
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid #e41e26;
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #555;
+        }
+        
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 768px) {
+            .card {
+                max-width: 100%;
+            }
+            
+            .balloon-container {
+                height: 250px;
+            }
+            
+            .balloon {
+                width: 60px;
+                height: 80px;
+            }
+            
+            .balloon:before {
+                width: 3px;
+                height: 15px;
+                bottom: -12px;
+                left: 28px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .name {
+                font-size: 22px;
+            }
+            
+            .text-box {
+                padding: 20px;
+            }
+            
+            .letter-content {
+                padding: 30px 20px;
+            }
+            
+            .letter-title {
+                font-size: 26px;
+                margin: 25px 0 15px;
+            }
+            
+            .letter-body {
+                padding: 0 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .balloon-container {
+                height: 200px;
+            }
+            
+            .balloon {
+                width: 50px;
+                height: 70px;
+            }
+            
+            .balloon:before {
+                width: 2px;
+                height: 12px;
+                bottom: -10px;
+                left: 24px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .name {
+                font-size: 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .text-box {
+                padding: 15px;
+            }
+            
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .letter-content {
+                padding: 25px 15px;
+            }
+            
+            .letter-title {
+                font-size: 24px;
+                margin: 20px 0 15px;
+            }
+            
+            .letter-body p {
+                margin-bottom: 20px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="red-bar"></div>
+        <div class="content">
+            <div class="balloon-container">
+                <div class="balloon"></div>
+                <div class="balloon"></div>
+                <div class="balloon"></div>
+                <div class="balloon"></div>
+                <div class="balloon"></div>
+            </div>
+            <div class="text-box">
+                <!-- <h1>Happy Birthday!</h1> -->
+                <div class="name">Hi Baby <span class="wave">👋</span></div>
+                <p>On your special day, I have something Amazing I want to share with you. Click the button below to read.</p>
+                <button id="showLetterBtn">Click Me</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="love-letter" id="loveLetter">
+        <div class="letter-content">
+            <div class="close-btn" id="closeBtn">&times;</div>
+            <div class="hearts" id="hearts"></div>
+            <div class="letter-title">My Dearest Uche</div>
+            <div class="date">30th April</div>
+            <div class="letter-body">
+                <p>My Forever,</p>
+                <p>As you celebrate another beautiful year of your life, I wanted to take a moment to tell you just how special you are.</p>
+                <p>Turning 30 is a big moment. In the Bible, age 30 often marked the beginning of something special. Joseph began serving Pharaoh at 30. David became king at 30. Jesus started His ministry at 30. It was a time when purpose and calling became clear. I believe this year marks the beginning of something new and beautiful in your life too.</p>
+                <p>Your dedication and hard work amaze me every day. You face challenges with strength and never give up, no matter how hard things get. I admire how much you care about the people and goals in your life. I love how your face lights up when you talk about the things that matter to you, and how your hand feels in mine. These small moments have become some of my most treasured memories.</p>
+                <p>In your presence, I've found a home I never want to leave. You've shown me what it means to truly be seen, to be understood, and to be loved unconditionally.</p>
+                <p>Today, I promise to keep loving you, standing by your side, and believing in all that you are. You deserve all the good things this world can give. One of my favorite verses reminds me of you:</p>
+                <blockquote>
+                    "For I know the plans I have for you," says the Lord. "Plans to help you, not to hurt you. Plans to give you hope and a future." — Jeremiah 29:11
+                </blockquote>
+                <p>May this year bring you abundant joy, exciting opportunities, and countless moments of pure bliss. I'm so grateful to celebrate another year of your amazing life.</p>
+                <p><strong>I Love You</strong>❤️</p>
+            </div>
+            <div class="signature">
+                <p>All my love, always and forever,</p>
+                <p>Amara</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showLetterBtn = document.getElementById('showLetterBtn');
+            const loveLetter = document.getElementById('loveLetter');
+            const closeBtn = document.getElementById('closeBtn');
+            const hearts = document.getElementById('hearts');
+            
+            // Create floating hearts
+            function createHearts() {
+                hearts.innerHTML = '';
+                for (let i = 0; i < 15; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.animationDelay = `${Math.random() * 5}s`;
+                    heart.style.opacity = '0';
+                    hearts.appendChild(heart);
+                }
+            }
+            
+            showLetterBtn.addEventListener('click', function() {
+                loveLetter.classList.add('show');
+                createHearts();
+                
+                // Scroll to the top of the letter when opened
+                document.querySelector('.letter-content').scrollTop = 0;
+                
+                setTimeout(() => {
+                    const heartElements = document.querySelectorAll('.heart');
+                    heartElements.forEach(heart => {
+                        heart.style.opacity = '1';
+                    });
+                }, 100);
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                loveLetter.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>
